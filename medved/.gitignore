@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Texts ###
+war_peace_text.txt
+test.txt
