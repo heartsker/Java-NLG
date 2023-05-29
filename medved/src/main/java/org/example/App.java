@@ -6,7 +6,7 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        Dataset dataset = new Dataset("file.txt");
+        Dataset dataset = new Dataset("war_peace.txt");
         dataset.setup();
         System.out.println("============RAW==DATA============");
         System.out.println(dataset.rawData);
@@ -28,9 +28,9 @@ public class App {
         NGramManager nGramManager = new NGramManager(tokenized);
 
         nGramManager.buildNGrams(5);
-        nGramManager.logNGrams();
+//        nGramManager.logNGrams();
 
-        String testText = "The quick brown ";
+        String testText = "single armed";
         List<Integer> tokens = dataset.tokenizer.tokenize(testText);
 
         System.out.println("Test text: " + testText);
@@ -46,10 +46,11 @@ public class App {
 
         Generator generator = new Generator(tokens, nGramManager);
 
-        List<Integer> generatedTokens = generator.generate(20);
-        List<String> generatedText = dataset.tokenizer.detokenizeSeparate(generatedTokens);
+        List<Integer> generatedTokens = generator.generate(100);
+        List<String> generatedTextTokens = dataset.tokenizer.detokenizeSeparate(generatedTokens);
+        String generatedText = dataset.tokenizer.detokenize(generatedTokens);
 
         System.out.println("Prompt: [" + testText + "]");
-        System.out.println("Generated text: " + generatedText);
+        System.out.println("Generated text: \n" + generatedText);
     }
 }
