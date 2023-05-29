@@ -25,6 +25,5 @@ public class Dataset {
     public void setup() throws IOException {
         load();
         tokenizer.setup(rawData);
-        System.out.println(token2string);
     }
 }
