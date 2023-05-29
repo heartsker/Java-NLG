@@ -44,6 +44,16 @@ public class Tokenizer {
         return String.join("", words);
     }
 
+    public List<String> detokenizeSeparate(List<Integer> tokens) {
+        List<String> words = new ArrayList<>();
+        for (Integer token : tokens) {
+            if (storage.token2string.containsKey(token)) {
+                words.add(storage.token2string.get(token));
+            }
+        }
+        return words;
+    }
+
     private String[] split(String string) {
         return string.toLowerCase().split("(?<=\\W)|(?=\\W)");
     }
