@@ -42,6 +42,14 @@ public class App {
 
         System.out.println("For text [" + testText + "] the most frequent next tokens are: " + nextWords);
 
+        System.out.println("============GENERATING============");
 
+        Generator generator = new Generator(tokens, nGramManager);
+
+        List<Integer> generatedTokens = generator.generate(20);
+        List<String> generatedText = dataset.tokenizer.detokenizeSeparate(generatedTokens);
+
+        System.out.println("Prompt: [" + testText + "]");
+        System.out.println("Generated text: " + generatedText);
     }
 }
