@@ -1,6 +1,7 @@
 package org.example;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class App {
@@ -15,5 +16,32 @@ public class App {
         System.out.println("===========DETOKENIZED===========");
         String detokenized = dataset.tokenizer.detokenize(tokenized);
         System.out.println(detokenized);
+
+        System.out.println("============NGRAMS============");
+
+//        String text = "The quick brown fox jumps over the lazy dog";
+//        List<Integer> tokenizedText = dataset.tokenizer.tokenize(text);
+//
+//        System.out.println("Text: " + text);
+//        System.out.println("Tokenized text: " + tokenizedText);
+
+        NGramManager nGramManager = new NGramManager(tokenized);
+
+        nGramManager.buildNGrams(5);
+        nGramManager.logNGrams();
+
+        String testText = "The quick brown ";
+        List<Integer> tokens = dataset.tokenizer.tokenize(testText);
+
+        System.out.println("Test text: " + testText);
+        System.out.println("Tokenized test text: " + tokens);
+
+        List<Integer> nextTokens = nGramManager.getMostFrequentNextTokens(tokens);
+
+        List<String> nextWords = dataset.tokenizer.detokenizeSeparate(nextTokens);
+
+        System.out.println("For text [" + testText + "] the most frequent next tokens are: " + nextWords);
+
+
     }
 }
