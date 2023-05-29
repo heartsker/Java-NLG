@@ -1,38 +1,53 @@
 package org.example;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
+import java.io.IOException;
+
+
+import java.util.Arrays;
+import java.util.List;
+
+public class AppTest
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+    private Dataset dataset;
+    @BeforeEach
+    void Init() {
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+        dataset = new Dataset("file.txt");
+        try {
+            dataset.setup();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assertions.assertTrue( false );
+        }
     }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
+    @Test
+    public void testDetokenizeReverts()
     {
-        assertTrue( true );
+        List<Integer> tokenized = dataset.tokenizer.tokenize(dataset.rawData);
+        String detokenized = dataset.tokenizer.detokenize(tokenized);
+        Assertions.assertEquals(dataset.rawData, detokenized);
+    }
+    @Disabled
+    public void testTokenizeReverts()
+    {
+        List<Integer> tokensMock = Arrays.asList(new Integer[]{2, 4, 1, 3, 1, 2, 0, 1});
+        String detokenized = dataset.tokenizer.detokenize(tokensMock);
+        List<Integer> tokenized = dataset.tokenizer.tokenize(detokenized);
+        detokenized = dataset.tokenizer.detokenize(tokenized);
+        Assertions.assertEquals(tokensMock, tokenized);
     }
 }
