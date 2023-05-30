@@ -1,7 +1,7 @@
 if [ "$1" = "all" ]; then
     mvn clean package
-    docker build --no-cache -t medved .
-    docker run --rm medved 1 2 3
+    docker build -t medved:local .
+    docker run --rm medved:local
 fi
 
 if [ "$1" = "build" ]; then
