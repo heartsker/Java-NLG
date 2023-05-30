@@ -6,7 +6,7 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        Dataset dataset = new Dataset("war_peace.txt");
+        Dataset dataset = new Dataset("datasets/war_peace.txt");
         dataset.setup();
         System.out.println("============RAW==DATA============");
         System.out.println(dataset.rawData);
