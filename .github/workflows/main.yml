@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   pull_request:
-    branches: [ main, dev, add-github-ci ]
+    branches: [ main, dev ]
 
 jobs:
   build_and_test:
@@ -17,4 +17,4 @@ jobs:
         distribution: 'temurin'
         
     - name: Test
-      run: mvn -T1C -B --update-snapshots --file medved/pom.xml verify
+      run: mvn test
