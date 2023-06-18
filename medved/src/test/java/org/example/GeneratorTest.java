@@ -1,8 +1,8 @@
 package org.example;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,9 @@ public class GeneratorTest
 {
     private NGramManager nGramManager;
     private List<Integer> source;
-    @BeforeEach
-    void before() {
+    @Test
+    public void testGenerator()
+    {
         source = new ArrayList<Integer>();
         for (int i = 0; i < 10; ++i) {
             source.add(i);
@@ -22,10 +23,8 @@ public class GeneratorTest
         this.nGramManager.buildNGrams(10);
         System.out.println("FIRST");
         System.out.println(nGramManager.toString());
-    }
-    @Test
-    public void testGenerator()
-    {
+
+
 
         List<Integer> input = new ArrayList<Integer>();
         for (int i = 0; i < 5; ++i) {
