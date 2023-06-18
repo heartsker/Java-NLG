@@ -17,7 +17,7 @@ public class Generator {
         List<Integer> generatedTokens = inputTokens;
 
         while (generatedTokens.size() < maxLength) {
-            List<Integer> nextTokens = nGramManager.getMostFrequentNextTokens(generatedTokens);
+            List<Integer> nextTokens = this.nGramManager.getMostFrequentNextTokens(generatedTokens);
             if (nextTokens == null || nextTokens.size() == 0) {
                 break;
             }
