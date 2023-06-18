@@ -14,7 +14,6 @@ public class Generator {
     }
 
     public List<Integer> generate(Integer maxLength) {
-        List<Integer> currentContext = inputTokens;
         List<Integer> generatedTokens = inputTokens;
 
         while (generatedTokens.size() < maxLength) {
@@ -25,8 +24,6 @@ public class Generator {
             Random randomizer = new Random();
             Integer nextToken = nextTokens.get(randomizer.nextInt(nextTokens.size()));
             generatedTokens.add(nextToken);
-//            currentContext.remove(0);
-//            currentContext.add(nextToken);
         }
 
         return generatedTokens;
