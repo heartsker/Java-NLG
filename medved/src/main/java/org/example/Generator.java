@@ -6,7 +6,7 @@ import java.util.Random;
 public class Generator {
 
     final private List<Integer> inputTokens;
-    final private NGramManager nGramManager;
+    private NGramManager nGramManager;
 
     public Generator (List<Integer> inputTokens, NGramManager nGramManager) {
         this.inputTokens = inputTokens;
