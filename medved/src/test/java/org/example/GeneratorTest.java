@@ -25,7 +25,6 @@ public class GeneratorTest
         System.out.println(nGramManager.toString());
 
 
-
         List<Integer> input = new ArrayList<Integer>();
         for (int i = 0; i < 5; ++i) {
             input.add(i);
