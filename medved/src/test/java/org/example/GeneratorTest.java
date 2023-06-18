@@ -18,8 +18,8 @@ public class GeneratorTest
             source.add(i);
         }
 
-        nGramManager = new NGramManager(source);
-        nGramManager.buildNGrams(10);
+        this.nGramManager = new NGramManager(source);
+        this.nGramManager.buildNGrams(10);
     }
     @Test
     public void testGenerator()
@@ -29,7 +29,7 @@ public class GeneratorTest
         for (int i = 0; i < 5; ++i) {
             input.add(i);
         }
-        Generator generator = new Generator(input, nGramManager);
+        Generator generator = new Generator(input, this.nGramManager);
 
         Assertions.assertEquals(source, generator.generate(10));
     }
