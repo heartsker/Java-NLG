@@ -12,7 +12,7 @@ public class GeneratorTest
     private NGramManager nGramManager;
     private List<Integer> source;
     @BeforeEach
-    void Init() {
+    void before() {
         source = new ArrayList<Integer>();
         for (int i = 0; i < 10; ++i) {
             source.add(i);
