@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   pull_request:
-    branches: [ main, dev, add-github-ci ]
+    branches: [ main, dev ]
 
 jobs:
   build_and_test:
@@ -17,5 +17,4 @@ jobs:
         distribution: 'temurin'
         
     - name: Test
-      run: cd medved
       run: mvn test
