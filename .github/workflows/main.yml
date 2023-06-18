@@ -15,8 +15,6 @@ jobs:
       with:
         java-version: '19'
         distribution: 'temurin'
-
-    - name: Build
-      run: mvn -B package --file medved/pom.xml
+        
     - name: Test
       run: mvn -T1C -B --update-snapshots --file medved/pom.xml verify
