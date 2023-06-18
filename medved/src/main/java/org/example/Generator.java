@@ -6,17 +6,19 @@ import java.util.Random;
 public class Generator {
 
     final private List<Integer> inputTokens;
-    private NGramManager nGramManager;
+    final private NGramManager nGramManager;
 
     public Generator (List<Integer> inputTokens, NGramManager nGramManager) {
         this.inputTokens = inputTokens;
         this.nGramManager = nGramManager;
+        System.out.println(nGramManager.toString());
     }
 
     public List<Integer> generate(Integer maxLength) {
         List<Integer> generatedTokens = inputTokens;
 
         while (generatedTokens.size() < maxLength) {
+            System.out.println(nGramManager.toString());
             List<Integer> nextTokens = this.nGramManager.getMostFrequentNextTokens(generatedTokens);
             if (nextTokens == null || nextTokens.size() == 0) {
                 break;

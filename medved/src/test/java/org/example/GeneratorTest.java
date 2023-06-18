@@ -31,6 +31,8 @@ public class GeneratorTest
         }
         Generator generator = new Generator(input, this.nGramManager);
 
-        Assertions.assertEquals(source, generator.generate(10));
+        List<Integer> got = generator.generate(10);
+
+        Assertions.assertEquals(source, got);
     }
 }
