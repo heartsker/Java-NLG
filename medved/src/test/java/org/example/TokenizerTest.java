@@ -14,19 +14,20 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.io.Console;
 import java.io.IOException;
 
 
 import java.util.Arrays;
 import java.util.List;
 
-public class AppTest
+public class TokenizerTest
 {
     private Dataset dataset;
     @BeforeEach
     void Init() {
 
-        dataset = new Dataset("file.txt");
+        dataset = new Dataset("datasets/test.txt");
         try {
             dataset.setup();
         } catch (IOException e) {
