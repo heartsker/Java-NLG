@@ -1,12 +1,16 @@
-if [ "$1" = "build" ]; then
+if [ "$1" = "local-build" ]; then
     mvn clean package -Dmaven.test.skip
+fi
+
+if [ "$1" = "docker-run" ]; then
+    docker run --rm medved:$2 $3
 fi
 
 if [ "$1" = "test" ]; then
     mvn clean test
 fi
 
-if [ "$1" = "local" ]; then
+if [ "$1" = "local-run" ]; then
     shift
     while [[ $# -gt 1 ]]; do
         case $1 in
@@ -32,11 +36,10 @@ if [ "$1" = "local" ]; then
     echo "MAXLENGTH   = $MAXLENGTH"
     echo "DEPTH       = $DEPTH"
     echo "PROMPT      = $1"
-    mvn clean package -Dmaven.test.skip
     java -Ddataset=$DATASET -Dmaxlength=$MAXLENGTH -Ddepth=$DEPTH -jar target/*.jar $1
 fi
 
-if [ "$1" = "docker" ]; then
+if [ "$1" = "docker-build" ]; then
     shift
     while [[ $# -gt 1 ]]; do
         case $1 in
@@ -58,11 +61,12 @@ if [ "$1" = "docker" ]; then
         esac
     done
 
+    TAG=$1
+    shift
+
     echo "DATASET     = $DATASET"
     echo "MAXLENGTH   = $MAXLENGTH"
     echo "DEPTH       = $DEPTH"
-    echo "PROMPT      = $1"
     mvn clean package -Dmaven.test.skip
-    docker build --progress=plain --build-arg "DATASET=$DATASET" --build-arg "MAXLENGTH=$MAXLENGTH" --build-arg "DEPTH=$DEPTH" -t medved:local .
-    docker run --rm medved:local $1
+    docker build --progress=plain --build-arg "DATASET=$DATASET" --build-arg "MAXLENGTH=$MAXLENGTH" --build-arg "DEPTH=$DEPTH" -t medved:$TAG .
 fi
