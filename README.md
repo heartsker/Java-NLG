@@ -34,7 +34,7 @@ And then use this image
 ./run.sh docker-run <your_tag> "<your_prompt>"
 ```
 
-### For the developer
+## For the developer
 
 ```
 ./run.sh build
