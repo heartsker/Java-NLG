@@ -13,68 +13,43 @@ public class App {
     private final static Integer defaultMaxNGramDepth = 5;
     private final static String defaultDatasetPath = "datasets/war_peace.txt";
 
-    private static Integer maxLength = 100;
+    private final static Integer defaultMaxLength = 100;
 
     public static void main(String[] args) throws IOException {
 
         // Setup default dataset
 
-        String datasetPath = defaultDatasetPath;
+        String datasetPath = System.getProperty("dataset");
 
-        if (args.length > 1) {
-            datasetPath = args[1];
+        if (datasetPath == null || datasetPath.isEmpty()) {
+            datasetPath = defaultDatasetPath;
         }
 
-        setupDatasetWithDefaultDepth(datasetPath);
+        String depthString = System.getProperty("depth");
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Integer depth = defaultMaxNGramDepth;
 
-        while (true) {
-
-            String command = reader.readLine();
-
-            // Setup new dataset
-            if (command.split(" ")[0].equals("setup")) {
-                datasetPath = command.split(" ")[1];
-
-                setupDatasetWithDefaultDepth(datasetPath);
-                continue;
-            }
-
-            // Setup new maxDepth
-            if (command.split(" ")[0].equals("depth")) {
-                int depth = Integer.parseInt(command.split(" ")[1]);
-
-                setupDataset(datasetPath, depth);
-                System.out.println("Set depth to " + depth);
-                continue;
-            }
-
-            // Setup max length
-            if (command.split(" ")[0].equals("length")) {
-                maxLength = Integer.parseInt(command.split(" ")[1]);
-                System.out.println("Set depth to " + maxLength);
-                continue;
-            }
-
-            // Exit
-            if (command.equals("exit") || command.equals("quit")) {
-                System.out.println("Quiting the application");
-                break;
-            }
-
-            // New prompt
-
-            handlePrompt(command);
+        if (depthString != null && !depthString.isEmpty()) {
+            depth = Integer.parseInt(depthString);
         }
-    }
 
-    private static void setupDatasetWithDefaultDepth(String filename) throws IOException {
-        setupDataset(filename, defaultMaxNGramDepth);
+        String lengthString = System.getProperty("maxlength");
+
+        Integer length = defaultMaxLength;
+
+        if (lengthString != null && !lengthString.isEmpty()) {
+            length = Integer.parseInt(lengthString);
+        }
+
+        String prompt = String.join(" ", args);
+
+        setupDataset(datasetPath, depth);
+
+        handlePrompt(prompt, length);
     }
 
     private static void setupDataset(String filename, Integer depth) throws IOException {
-        System.out.println("Setting up dataset from " + filename);
+        System.out.println("Setting up dataset from \"" + filename + "\". Max depth is set to " + depth);
 
         // Setup dataset
 
@@ -92,12 +67,12 @@ public class App {
         System.out.println("Successfully set up dataset from " + filename);
     }
 
-    private static void handlePrompt(String prompt) {
+    private static void handlePrompt(String prompt, Integer length) {
         List<Integer> tokens = dataset.tokenizer.tokenize(prompt);
 
         Generator generator = new Generator(tokens, nGramManager);
 
-        List<Integer> generatedTokens = generator.generate(maxLength);
+        List<Integer> generatedTokens = generator.generate(length);
         String generatedText = dataset.tokenizer.detokenize(generatedTokens);
 
         System.out.println("==== Generated text from your prompt ====");
