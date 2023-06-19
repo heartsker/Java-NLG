@@ -2,14 +2,6 @@ if [ "$1" = "local-build" ]; then
     mvn clean package -Dmaven.test.skip
 fi
 
-if [ "$1" = "docker-run" ]; then
-    docker run --rm medved:$2 $3
-fi
-
-if [ "$1" = "test" ]; then
-    mvn clean test
-fi
-
 if [ "$1" = "local-run" ]; then
     shift
     while [[ $# -gt 1 ]]; do
@@ -69,4 +61,14 @@ if [ "$1" = "docker-build" ]; then
     echo "DEPTH       = $DEPTH"
     mvn clean package -Dmaven.test.skip
     docker build --progress=plain --build-arg "DATASET=$DATASET" --build-arg "MAXLENGTH=$MAXLENGTH" --build-arg "DEPTH=$DEPTH" -t medved:$TAG .
+fi
+
+if [ "$1" = "docker-run" ]; then
+    echo "TAG       = $2"
+    echo "PROMPT    = $3"
+    docker run --rm medved:$2 $3
+fi
+
+if [ "$1" = "test" ]; then
+    mvn clean test
 fi
